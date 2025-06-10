@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Products</title>
+        <style>
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 25px auto;
+            border-radius: 10px; /* Smaller rounded corners */
+            overflow: hidden; /* Ensures the corners are applied */
+            font-size:18px
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eeeeee;
+            font-weight: bold;
+            color:black;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+
+        @media (max-width: 600px) {
+            .data-subhead {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        h1 {
+            color: green;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+        <h1 class="h1">Products</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>PID</th>
+                <th>Product</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product  in products %}
+            <tr>
+                <td>{{ product.0 }}</td>
+                <td>{{ product.1 }}</td>
+                <td>{{ product.2 }}</td>
+                <td>{{ product.3 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

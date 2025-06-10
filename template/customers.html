@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <style>
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin: 25px auto;
+            border-radius: 10px; /* Smaller rounded corners */
+            overflow: hidden; /* Ensures the corners are applied */
+            font-size:20px
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eeeeee;
+            font-weight: bold;
+            color:black;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+
+        @media (max-width: 600px) {
+            .data-subhead {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        h1 {
+            color: green;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="h1">Total Number Of Customers</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Purchase</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer  in data %}
+            <tr>
+                <td>{{ customer.0 }}</td>
+                <td>{{ customer.1 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

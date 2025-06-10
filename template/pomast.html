@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functional Purchase Order Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #E4E9F7, #00f2fe);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        form {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            height: 640px;
+            width: 500px;
+            max-width: 90%;
+            box-sizing: border-box;
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
+            animation: formIn 1s forwards;
+        }
+
+        @keyframes formIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        form:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: titleIn 1s 0.5s forwards;
+        }
+
+        @keyframes titleIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="number"],
+        select,
+        input[type="text"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus,
+        select:focus,
+        input[type="text"]:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            padding: 15px;
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            transform: scale(1.05);
+        }
+
+        #amount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 15px;
+            text-align: center;
+            opacity: 0;
+            animation: amountIn 1s 0.5s forwards;
+        }
+
+        @keyframes amountIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+        }
+
+        /* Animation on form fields */
+        input[type="text"], input[type="number"], select {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <form id="purchaseForm" action="purchase_entry" method="POST">
+         {% csrf_token %}
+        <h2>Purchase Order</h2>
+
+        <!-- Supplier Name -->
+        <label for="supplier-name">Enter Supplier Name</label>
+        <input type="text" id="supplier-name" name="supplier_name" placeholder="Enter Supplier Name" required>
+
+        <!-- Product Code -->
+        <label for="options">Choose Product Code</label>
+        <select id="options" name="pocode" required>
+            <option value="" disabled selected>Select a Product Code</option>
+            {% for pid in pids %}
+                <option value="{{pid.0}}">{{pid.0}}</option>
+            {% endfor %}
+
+        </select>
+
+        <!-- Quantity -->
+        <label for="quantity">Enter Quantity</label>
+        <input type="number" id="quantity" name="quantity" placeholder="Enter Quantity" min="1" required>
+
+        <!-- Rate -->
+        <label for="rate">Enter Rate</label>
+        <input type="number" id="rate" name="rate" placeholder="Enter Rate" min="1" required>
+
+        <!-- Amount Display -->
+        <div id="amount">Amount: <span id="amt">0</span></div>
+
+        <!-- Submit Button -->
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        // Select elements
+        const form = document.querySelector("#purchaseForm");
+        const supplierName = document.querySelector("#supplier-name");
+        const productCode = document.querySelector("#options");
+        const quantity = document.querySelector("#quantity");
+        const rate = document.querySelector("#rate");
+        const amtDisplay = document.querySelector("#amt");
+
+        // Function: Calculate Amount
+        function calculateAmount() {
+            const qty = parseFloat(quantity.value) || 0;
+            const price = parseFloat(rate.value) || 0;
+            const total = qty * price;
+            amtDisplay.textContent = total.toFixed(2);
+        }
+
+        // Add Event Listeners for real-time calculations
+        quantity.addEventListener("input", calculateAmount);
+        rate.addEventListener("input", calculateAmount);
+
+<!--        // Handle form submission-->
+<!--        form.addEventListener("submit", (e) => {-->
+<!--           e.preventDefault(); // Prevent page reload -->
+
+<!--            // Validate form inputs-->
+<!--            if (!supplierName.value.trim()) {-->
+<!--                alert("Please enter a supplier name.");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            if (!productCode.value) {-->
+<!--                alert("Please select a product code.");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            if (!quantity.value || quantity.value <= 0) {-->
+<!--                alert("Please enter a valid quantity.");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            if (!rate.value || rate.value <= 0) {-->
+<!--                alert("Please enter a valid rate.");-->
+<!--                return;-->
+<!--            }-->
+
+<!--            // Log form data (you can replace this with actual backend submission logic)-->
+<!--            const formData = {-->
+<!--                supplier: supplierName.value,-->
+<!--                product: productCode.value,-->
+<!--                quantity: quantity.value,-->
+<!--                rate: rate.value,-->
+<!--                amount: amtDisplay.textContent,-->
+<!--            };-->
+
+<!--            console.log("Form Submitted:", formData);-->
+<!--            alert("Form submitted successfully!");-->
+
+<!--            // Reset the form and amount display-->
+<!--            form.reset();-->
+<!--            amtDisplay.textContent = "0";-->
+<!--        });-->
+    </script>
+</body>
+</html>

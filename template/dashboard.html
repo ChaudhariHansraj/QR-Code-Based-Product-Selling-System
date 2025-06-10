@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com -->
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% load static %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!----======== CSS ======== -->
+  <link rel="stylesheet" href="{%static 'dash_style.css'%}">
+
+  <!----===== Boxicons CSS ===== -->
+  <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+  <!--<title>Dashboard Sidebar Menu</title>-->
+  <!-- Bootstrap Stylesheet  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+
+     /* Custom Styles */
+        body {
+            margin:0px;
+            padding:0;
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        h1 {
+            color: #343a40;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            border: 2px solid #6c757d;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        table thead {
+            background-color: #007bff;
+            color: white;
+        }
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
+        }
+        .text-primary {
+            color: #007bff !important;
+            font-weight: bold;
+        }
+        .text-success {
+            color: #28a745 !important;
+            font-weight: bold;
+        }
+        .totals {
+            font-size: 1.2rem;
+            padding: 15px;
+            border: 1px solid #007bff;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        tr:hover{
+          box-shadow: 8px 8px 10px gray;
+        }
+
+        .amt{
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .order-form{
+          display: flex;
+          align-items: end;
+          justify-content: end;
+          margin-bottom:10px;
+        }
+
+        .order-form input{
+          margin-right:10px;
+        }
+
+     .print{
+          display:flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 20px;
+     }
+
+     .order-table{
+        margin:0 20px 0 20px auto;
+        height:100vh;
+        width:100vw;
+
+      }
+
+     .print-bill{
+        display:flex;
+        justify-content:center;
+        margin-top:25px;
+     }
+
+    .cancel-form{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-top:20px;
+    }
+
+    .purchase-entry{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        margin-top:20px;
+    }
+
+
+
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.box {
+  height: 280px;
+  width: 240px;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  text-align: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.box .icon {
+  font-size: 50px;
+  color:white;
+  transition: color 0.4s ease;
+  margin-bottom: 15px;  
+}
+
+.box:hover .icon{
+  color: #0f72f3;
+}
+.box:hover .count{
+  color: white;
+}
+
+
+.text1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #343a40;
+  margin-bottom: 5px;
+}
+
+.count {
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  transition: color 0.3s ease;
+
+}
+
+.count:hover{
+  color: white;
+}
+.text2 {
+  font-size: 16px;
+  color: #6c757d;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .box {
+    width: 90%;
+    margin: 10px 0;
+  }
+}
+
+.customers{ 
+  background: linear-gradient(
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.4)
+      ),
+  url("static/images/customers8.webp")no-repeat center center;
+  background-size: cover;
+}
+
+
+.customers .text1,.text2{
+  color:white;  
+}
+
+.products{
+  background: linear-gradient(
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.4)
+      ),
+  url("static/images/products.webp")no-repeat center center;
+  background-size: cover;
+}
+
+.products .text1,.text2{
+  color:white;  
+}
+
+.orders{
+  background: linear-gradient(
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.4)
+      ),
+  url("static/images/orders3.jpeg")no-repeat center center;
+  background-size: cover;
+}
+
+.orders .text1,.text2{
+  color:white;  
+}
+
+.bills{
+  background: linear-gradient(
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.4)
+      ),
+  url("static/images/bill5.webp")no-repeat center center;
+  background-size: cover;
+}
+
+.bills .text1,.text2{
+  color:white;  
+}
+
+.details{
+  background: linear-gradient(
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.4)
+      ),
+  url("static/images/details7.jpg")no-repeat center center;
+  background-size: cover;
+}
+
+.details .text1, .text2{
+  color:white;  
+}
+
+
+
+  </style>
+  <!-- Styling for table of bill Generated for Purchaser -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body style="background-color:#E4E9F7;">
+  <nav class="sidebar close">
+    <header>
+      <div class="image-text">
+        <span class="image">
+          <img src="{% static 'uploads/logo.jpeg' %}" alt="Brand Logo">
+
+        </span>
+
+        <div class="text logo-text">
+          <span class="name">MyDash</span>
+          <span class="profession">Board</span>
+        </div>
+      </div>
+
+      <i class='bx bx-chevron-right toggle'></i>
+    </header>
+
+    <div class="menu-bar">
+      <div class="menu">
+
+<!--        <li class="search-box">-->
+<!--          <i class='bx bx-search icon'></i>-->
+<!--          <input class="text" type="text" placeholder="Search ...">-->
+<!--        </li>-->
+
+        <ul class="menu-links" style="padding:0;">
+          <li class="nav-link">
+            <a href="http://127.0.0.1:8000/dashboard">
+              <i class='bx bx-home icon'></i>
+              <span class="text nav-text">Home</span>
+            </a>
+          </li>
+
+<!--          <ul class="menu-links" style="padding:0;">-->
+          <li class="nav-link">
+            <a href="http://127.0.0.1:8000/add_product_form">
+<!--                <box-icon name='add-to-queue'></box-icon>-->
+              <i class='bx bx-add-to-queue icon'></i>
+              <span class="text nav-text">Add Product</span>
+            </a>
+          </li>
+
+         <li class="nav-link">
+  <a href="http://127.0.0.1:8000/qrScanner/qr_code_scanner">
+    <i class='bx bx-qr-scan icon'></i>
+
+    <span class="text nav-text">Scan QR</span>
+  </a>
+</li>
+
+
+          <li class="nav-link">
+            <a href="http://127.0.0.1:8000/product_list/plist/">
+              <i class='bx bx-list-ul icon'></i>
+              <span class="text nav-text">Products List</span>
+            </a>
+          </li>
+        <li class="nav-link">
+          <a href="http://127.0.0.1:8000/orders/orderlist/">
+            <i class='bx bx-list-check icon'></i>
+            <span class="text nav-text">Order List</span>
+          </a>
+        </li>
+
+          <li class="nav-link">
+            <a href="http://127.0.0.1:8000/orders/orderdetails">
+            <i class='bx bx-receipt icon'></i>
+            <span class="text nav-text">Order Details List</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="http://127.0.0.1:8000/purchases/purchase_entry_form">
+            <i class='bx bx-file icon'></i>
+            <span class="text nav-text">Purchase Entry</span>
+            </a>
+          </li>
+
+          <li class="nav-link">
+            <a href="http://127.0.0.1:8000/purchases/purchase_details">
+            <i class='bx bx-file icon'></i>
+            <span class="text nav-text">Purchase Details</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="bottom-content">
+        <li class="">
+          <a href="{% url 'logout'%}">
+            <i class='bx bx-log-out icon'></i>
+            <span class="text nav-text">Logout</span>
+          </a>
+        </li>
+
+<!--        <li class="mode">-->
+<!--          <div class="sun-moon">-->
+<!--            <i class='bx bx-moon icon moon'></i>-->
+<!--            <i class='bx bx-sun icon sun'></i>-->
+<!--          </div>-->
+<!--&lt;!&ndash;          <span class="mode-text text">Dark mode</span>&ndash;&gt;-->
+
+<!--          <div class="toggle-switch">-->
+<!--            <span class="switch"></span>-->
+<!--          </div>-->
+<!--        </li>-->
+
+      </div>
+    </div>
+
+  </nav>
+
+
+
+  <section class="home">
+    <div class="text brand-name" style="text-align:center; font-size:40px; color:rgba(13, 11, 11, 0.838);">{{brand_name}}</div>
+
+
+    {% if boxes %}
+    <div class="box-container">
+  <!-- Customers Card -->
+  <div class="box customers">
+      <div class="icon"><i class="bx bx-user"></i></div>
+      <div class="text1">Customers</div>
+      <div class="count">{{totalCustomers}}</div>
+      <div class="text2">Total Customers</div>
+  </div>
+
+  <!-- Products Card -->
+  <div class="box products">
+      <div class="icon"><i class="bx bx-cube"></i></div>
+      <div class="text1">Products</div>
+      <div class="count">{{totalProducts}}</div>
+      <div class="text2">Total Products</div>
+  </div>
+
+  <!-- Purchase Orders Card -->
+  <div class="box orders">
+      <div class="icon"><i class="bx bx-cart"></i></div>
+      <div class="text1">Purchase Orders</div>
+      <div class="count">{{totalPurchasedOrders}}</div>
+      <div class="text2">Total Orders</div>
+  </div>
+
+  <!-- Bills Card -->
+  <div class="box bills">
+      <div class="icon"><i class="bx bx-receipt"></i></div>
+      <div class="text1">Bills</div>
+      <div class="count">{{totalBills}}</div>
+      <div class="text2">Total Bills</div>
+  </div>
+
+  <!-- Order Details Card -->
+  <div class="box details">
+      <div class="icon"><i class="bx bx-detail"></i></div>
+      <div class="text1">Order Details</div>
+      <div class="count">{{totalOrderDetails}}</div>
+      <div class="text2">Total Order Details</div>
+  </div>
+</div>
+
+        {% endif %}
+
+
+
+    <div class="successfully-added">
+      {% if  form %}
+        {% include "add_product_form.html" %}
+      {% endif %}
+    </div>
+
+        {% if qr_code %}
+        <h3>QR Code for {{ pname }}</h3>
+        <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" style="height:400px; width:400px; margin-left:300px">
+
+        {% endif %}
+
+
+    {% if total %}
+    <div class="container my-5 order-table" id="bill">
+        <h1 class="text-center mb-4">Product List</h1>
+        <form action="update_bill" method="POST">
+              {%csrf_token%}
+
+                <p><b><i>Date : {{date}} </i></b></p>
+                <p><b id="ordid">Order ID : {{ordid}} </b></p>
+              <span class="order-form">
+                  <input type="hidden"  name="total" value={{total}} >
+                  <input type="hidden"  name="damount" value={{damount}}>
+                  <input type="hidden"  name="final_amount" value={{final_amount}}>
+                  <input type="hidden"  name="ordid" value={{ordid}}>
+
+                <input type="text"  placeholder="Enter Purchaser name here" class="btn btn-secondary" name="uname" required>
+              </span>
+
+              <div>
+                     <table class="table table-bordered table-hover text-center ">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in orderdetail %}
+                            <tr>
+                                <td>{{ item.1 }}</td>
+                                <td>{{ item.2 }}</td>
+                                <td>₹{{ item.3 }}</td>
+                                <td>{{ item.4 }}</td>
+                                <td>₹{{ item.5 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="mt-4 text-end">
+                        <div class="totals">
+                            <h4>Number of Products: <span class="text-primary">{{ products }}</span></h4>
+
+                            <h4 >Total: <span class="text-success">₹{{ total }}</span></h4>
+
+                            <h4 class="amt"> <span class="text-success">Discount: {{ discount }}%</span> <span class="text-danger">- ₹{{ damount }}</span></h4>
+
+                            <h4>Final Amount: <span class="text-success">₹{{ final_amount }}</span></h4>
+                        </div>
+                    </div>
+                  <div class="print-bill">
+                    <input type="submit" value="print" class="btn btn-success" id="submit-button"  required>
+                  </div>
+
+              </div>
+        </form>
+        <div class="container my-5 cancel-form">
+            <form action="cancel_bill" action="post">
+                <input type="submit" value="cancel" class="btn btn-danger" id="cancel-button" name="cancel">
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="product-list" id="productList">
+      {% if pdata %}
+        {% include "products_list.html" %}
+      {% endif %}
+    </div>
+
+    <div class="order-list" id="orderList">
+      {% if orderlist %}
+        {% include "orderlist.html" %}
+      {% endif %}
+    </div>
+
+    <div class="order-details" id="orderDetails">
+      {% if orderdetails %}
+        {% include "orderdetails.html" %}
+      {% endif %}
+    </div>
+
+    <!--      Purchase Entry Form -->
+
+    
+    <div class="purchase-entry" id="purchaseEntry">
+      {% if pids %}
+        {% include "pomast.html" %}
+      {% endif %}
+
+
+    </div> <div class="purchase-entry">
+      {% if purchase_details %}
+        {% include "purchaseDetails.html" %}
+      {% endif %}
+    </div>
+
+    </div> <div class="purchase-entry">
+      {% if current_time %}
+        {% include "userbill.html" %}
+      {% endif %}
+    </div>
+
+
+    <div id="demo">
+      
+    </div>
+
+
+  </section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script>
+    const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    })
+    searchBtn.addEventListener("click", () => {
+      sidebar.classList.remove("close");
+    })
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light mode";
+      } else {
+        modeText.innerText = "Dark mode";
+      }
+    });
+
+
+
+  </script>
+
+</body>
+
+</html>

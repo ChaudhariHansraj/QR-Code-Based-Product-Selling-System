@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BHARAT BAZAAR | Customer Bill</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: aliceblue;
+        }
+
+        .receipt {
+            width: 320px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .store-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .store-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .store-info {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Bill Info */
+        .bill-info {
+            background: #f9f9f9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .bill-info div {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin: 5px 0;
+        }
+
+        .bill-info span:first-child {
+            color: #666;
+        }
+
+        /* Summary Info */
+        .summary-info {
+            background: #f0f0f0;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* Items */
+        .items-list {
+            margin: 20px 0;
+        }
+
+        .item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-name {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .item-code {
+            font-size: 12px;
+            color: #666;
+            margin-left: 8px;
+        }
+
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .qty-price {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .total-price {
+            font-weight: 500;
+            color: #000;
+        }
+
+        /* Totals */
+        .totals {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+
+        .final-amount {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px solid #000;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .items-summary {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .thank-you {
+            font-size: 14px;
+            font-weight: 500;
+            margin: 15px 0;
+            color: #000;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .receipt {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body id="invoice">
+    <div class="receipt" >
+        <!-- Store Header -->
+        <div class="store-header">
+            <h1 class="store-name">BHARAT BAZAAR</h1>
+            <div class="store-info">
+                123 Shopping Mall, City Center<br>
+                Tel: +91 1234567890
+            </div>
+        </div>
+
+        <!-- Bill Info -->
+        <div class="bill-info">
+            <div>
+                <span>Bill No:</span>
+                <span id="ordid">{{ ordid }}</span>
+            </div>
+            <div>
+                <span>Date:</span>
+                <span>{{ data.0.1 }}</span>
+            </div>
+            <div>
+                <span>Time:</span>
+                <span>{{ current_time }}</span>
+            </div>
+            <div>
+                <span>Customer:</span>
+                <span id="uname">{{ uname }}</span>
+            </div>
+        </div>
+
+        <!-- Summary Info -->
+        <div class="summary-info">
+            <div class="total-items">
+                Total Items: {{ data|length }}
+            </div>
+        </div>
+
+        <!-- Items List -->
+        <div class="items-list">
+            {% for row in data %}
+            <div class="item">
+                <div class="item-name">
+                    {{ row.8 }}
+                    <span class="item-code">#{{ forloop.counter }}</span>
+                </div>
+                <div class="item-details">
+                    <span class="qty-price">{{ row.10 }} × ₹{{ row.9 }}</span>
+                    <span class="total-price">₹{{ row.11 }}</span>
+                </div>
+<!--                            <i> {{ data }} </i>-->
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Totals -->
+        <div class="totals">
+            <div class="total-line">
+                <span>Subtotal</span>
+                <span>₹{{ total }}</span>
+            </div>
+            <div class="total-line">
+                <span>Discount</span>
+                <span>₹{{ damount }}</span>
+            </div>
+            <div class="total-line final-amount">
+                <span>TOTAL</span>
+                <span>₹{{ final_amount }}</span>
+            </div>
+        </div>
+
+        <!-- Items Summary -->
+        <div class="items-summary">
+            You purchased {{ data|length }} item{% if data|length != 1 %}s{% endif %} 
+            worth ₹{{ total }}
+            {% if damount > 0 %}
+            and saved ₹{{ damount }}!
+            <i> {{ data }} </i>
+            {% endif %}
+
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="thank-you">Thank You For Shopping!</div>
+            <p>Please Visit Again</p>
+            <p>And give Feedback</p>
+        </div>
+    </div>
+    
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    let ordid = document.getElementById('ordid').innerText
+    let uname = document.getElementById('uname').innerText
+    window.onload = function () {
+        const invoiceElement = document.getElementById('invoice');
+        const options = {
+            margin: 1,
+            filename: `${uname}_${ordid}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        // Generate and save the PDF automatically
+        html2pdf().set(options).from(invoiceElement).save();
+    };
+</script>
+
+</body>
+</html>

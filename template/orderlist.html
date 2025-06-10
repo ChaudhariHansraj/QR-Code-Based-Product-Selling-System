@@ -1,0 +1,108 @@
+    <style>
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom:20px;
+            margin-left:5%;
+            border-radius: 10px; /* Smaller rounded corners */
+            overflow: hidden; /* Ensures the corners are applied */
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #A58CB3;
+            font-weight: bolder;
+            color:black;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+
+        @media (max-width: 600px) {
+            .data-subhead {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        h1 {
+            color: green;
+            text-align:center;
+        }
+        form{
+            width:100%;
+            text-align:center;
+        }
+        .details-btn{
+            all: unset;
+            cursor: pointer;
+            width:100%;
+            padding:10px 10px 10px 0px;
+            color : blue;
+        }
+
+    </style>
+
+    <h1 class="h1">Orders Made in Store</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Discount</th>
+                <th>Net Amount </th>
+                <th>Order Details </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in orderlist %}
+            <tr>
+                <td>{{ row.0 }}</td>
+                <td>{{ row.1 }}</td>
+                <td>{{ row.2 }}</td>
+                <td>{{ row.3 }}</td>
+                <td>{{ row.4 }}</td>
+                <td>{{ row.5 }}</td>
+                <td class="detail-cell">
+                    <form method="post" action="showDetails" >
+                        {% csrf_token %}
+                        <input type="hidden"  name="ordid" value={{row.0}} >
+                        <input type="submit" class="details-btn" value="Order Details">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr style="background-color:#A58CB3; color:black; font-size:23px">
+                <td>Total Orders</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td></td>
+            </tr>
+            <tr  style="background-color:black; color:white;  font-size:22px">
+                <td>{{totalOrders}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{Total}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>

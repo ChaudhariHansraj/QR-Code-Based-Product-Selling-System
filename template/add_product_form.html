@@ -1,0 +1,157 @@
+  <style>
+
+
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      padding: 30px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      animation: formFadeIn 1s ease-out;
+    }
+
+    @keyframes formFadeIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Decorative Circles */
+    form::before,
+    form::after {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(135deg, #007bff, #00d2ff);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    form::before {
+      top: -50px;
+      left: -50px;
+    }
+
+    form::after {
+      bottom: -50px;
+      right: -50px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    label {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: rgba(245, 245, 245, 0.9);
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    /* Buttons */
+    input[type="submit"],
+    input[type="reset"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(135deg, #28a745, #43e97b);
+      color: #fff;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(135deg, #1e8740, #36c972);
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(40, 167, 69, 0.5);
+    }
+
+    input[type="reset"] {
+      background: linear-gradient(135deg, #e63946, #f77f00);
+      color: #fff;
+      margin-top: 10px;
+    }
+
+    input[type="reset"]:hover {
+      background: linear-gradient(135deg, #a71d2a, #dc5c00);
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(230, 57, 70, 0.5);
+    }
+
+    /* Additional Styling */
+    .note {
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+      margin-top: 15px;
+    }
+  </style>
+
+  <div class="container">
+    <form method="POST" action="add_product">
+      {%csrf_token%}
+      <h1>Add Product</h1>
+      <label for="pname">Enter Product Name</label>
+      <input type="text" name="pname" id="pname" placeholder="Enter Product Name" required>
+      
+      <label for="description">Enter Description for Product</label>
+      <input type="text" name="pdesc" id="description" placeholder="Enter Product Description" required>
+      
+      <label for="price">Enter Price of Product</label>
+      <input type="number" name="price" id="price" placeholder="Enter Product Price" required>
+      
+      <input type="submit" value="Add Product">
+      <input type="reset" value="Clear">
+      
+      <p class="note">Fields marked with * are mandatory.</p>
+    </form>
+  </div>
+
